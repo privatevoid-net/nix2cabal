@@ -1,14 +1,13 @@
 { haskellPackages
+, lib
+, preConfigure ? "true"
 , runCommand
 , spec
-, stdenv
-, preConfigure ? ""
 }:
 
 let
 
   inherit (spec) name;
-  inherit (stdenv) lib;
 
   getVersion = name:
   let
@@ -45,7 +44,7 @@ let
   '';
 
   src = runCommand "${name}-src" {} ''
-    cp --recursive --no-preserve=mode ${./.} $out
+    cp --recursive --no-preserve=mode ${../.} $out
     (cd $out && ${preConfigure})
   '';
 
