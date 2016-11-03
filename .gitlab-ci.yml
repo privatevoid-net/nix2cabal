@@ -1,0 +1,6 @@
+image: phunehehe/nix:latest
+test:
+    script: ./test/test.sh
+    artifacts:
+        paths:
+          - ./test/nix2cabal-test.cabal

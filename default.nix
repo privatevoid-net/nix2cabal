@@ -3,6 +3,7 @@
 , preConfigure ? "true"
 , runCommand
 , spec
+, source ? ../.
 }:
 
 let
@@ -22,7 +23,7 @@ let
     dependencies = dependenciesWithVersions spec.dependencies;
     tests = lib.mapAttrs (name: value: {
       dependencies = dependenciesWithVersions value.dependencies;
-    }) spec.tests;
+    }) spec.tests or {};
   };
   hpack = lib.recursiveUpdate spec hpackDependencies;
   hpackFile = builtins.toFile "package.yaml" (builtins.toJSON hpack);
@@ -44,7 +45,7 @@ let
   '';
 
   src = runCommand "${name}-src" {} ''
-    cp --recursive --no-preserve=mode ${../.} $out
+    cp --recursive --no-preserve=mode ${source} $out
     (cd $out && ${preConfigure})
   '';
 
@@ -60,7 +61,7 @@ in haskellPackages.mkDerivation {
   executableHaskellDepends = map (d: haskellPackages.${d}) spec.dependencies;
   testHaskellDepends = map (d:
     haskellPackages.${d}
-  ) (lib.concatLists (lib.mapAttrsToList (_: t: t.dependencies) spec.tests));
+  ) (lib.concatLists (lib.mapAttrsToList (_: t: t.dependencies) spec.tests or {}));
 
   preConfigure = ''
     ${copyCabalFile}
