@@ -10,7 +10,8 @@ not have been so simple.
 
 ## Examples
 
-| Nix definition                                                                     | Generated Cabal file                                                                                        |
-| ---------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| [default.nix](https://gitlab.com/phunehehe/nix2cabal/blob/master/test/default.nix) | [nix2cabal-test.cabal](https://gitlab.com/phunehehe/nix2cabal/builds/artifacts/master/browse/test?job=test) |
-| [default.nix](https://gitlab.com/phunehehe/foomail/blob/master/default.nix)        | [foomail.cabal](https://gitlab.com/phunehehe/foomail/builds/artifacts/master/browse?job=cabal)              |
+| Nix definition                                                                               | Generated Cabal file                                                                                        |
+| -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| [nix2cabal/default.nix](https://gitlab.com/phunehehe/nix2cabal/blob/master/test/default.nix) | [nix2cabal-test.cabal](https://gitlab.com/phunehehe/nix2cabal/builds/artifacts/master/browse/test?job=test) |
+| [brackets/default.nix](https://gitlab.com/phunehehe/brackets/blob/master/default.nix)        | [brackets.cabal](https://gitlab.com/phunehehe/brackets/builds/artifacts/master/browse?job=build)            |
+| [foomail/default.nix](https://gitlab.com/phunehehe/foomail/blob/master/default.nix)          | [foomail.cabal](https://gitlab.com/phunehehe/foomail/builds/artifacts/master/browse?job=cabal)              |
