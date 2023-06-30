@@ -1,9 +1,11 @@
 { haskellPackages
 , lib
-, preConfigure ? "true"
 , runCommand
+}:
+
+{ preConfigure ? "true"
 , spec
-, source ? ../.
+, source
 }:
 
 let
