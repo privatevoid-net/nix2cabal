@@ -33,7 +33,7 @@ let
   cabalFile = runCommand "${name}.cabal" {} ''
 
     # hpack needs the source to glob e.g. data-files
-    cp --recursive --no-preserve=mode ${src} src
+    cp --recursive --no-preserve=mode ${source} src
 
     cp ${hpackFile} src/package.yaml
     (cd src && ${haskellPackages.hpack}/bin/hpack)
@@ -46,28 +46,11 @@ let
     cp --force ${cabalFile} ${name}.cabal
   '';
 
-  src = runCommand "${name}-src" {} ''
+  source = runCommand "${name}-src" {} ''
     cp --recursive --no-preserve=mode ${source} $out
-    (cd $out && ${preConfigure})
+    (cd $out && ${copyCabalFile} && ${preConfigure})
   '';
 
-in haskellPackages.mkDerivation {
-
-  inherit src;
-  pname = name;
-  isExecutable = lib.hasAttr "executables" spec;
-  isLibrary = lib.hasAttr "library" spec;
-  license = lib.licenses.mpl20;
-  version = spec.version or "0.0.0";
-
-  executableHaskellDepends = map (d: haskellPackages.${d}) spec.dependencies;
-  testHaskellDepends = map (d:
-    haskellPackages.${d}
-  ) (lib.concatLists (lib.mapAttrsToList (_: t: t.dependencies) spec.tests or {}));
-
-  preConfigure = ''
-    ${copyCabalFile}
-  '';
-
-  shellHook = copyCabalFile;
+in {
+  inherit cabalFile source;
 }
